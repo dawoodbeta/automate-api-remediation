@@ -1,16 +1,20 @@
 import os, pprint
 from ordered_set import OrderedSet
 
-template_api_path = "../sample_files/base-template/"
-source_api_path = "../sample_files/api-current/"
-destination_api_path = "../sample_files/api-destination/"
+# template_api_path = "../sample_files/base-template/"
+# source_api_path = "../sample_files/api-current/"
+# destination_api_path = "../sample_files/api-destination/"
+
+template_api_path = "../api_data/api_template/"
+source_api_path = "../api_data/api_existing/"
+destination_api_path = "../api_data/api_converted/"
 
 filename = "build.gradle"
 template_file = os.path.join(template_api_path, filename)
 source_file = os.path.join(source_api_path, filename)
 destination_file = os.path.join(destination_api_path, filename)
 
-# with open(template_file) as file:
+# with open(source_file) as file:
 #     for line in file:
 #         print(line.rstrip())
 
@@ -42,7 +46,7 @@ with open(template_file, "r") as f:
             template_list.append(line)
             data = {}
             template_split_line = line.strip().replace("'", "").replace("ion ", "ion:").replace(" ", "")
-            # print("Line {}: {}".format(index, template_split_line))
+#             print("Line {}: {}".format(index, template_split_line))
             i += 1
             if i == 1 or i == 8 or i >= 13:
                 line_data = template_split_line.split(":")
@@ -52,6 +56,7 @@ with open(template_file, "r") as f:
 
                     data["prefix"] = line_data[0]
                     data["group"] = line_data[len(line_data)-3]
+                    data["artifact"] = line_data[len(line_data)-2]
                     sufix = line_data[len(line_data)-2].split('-')
                     data["artifact_suffix"] = sufix[len(sufix)-1]
                     data["version"] = line_data[len(line_data)-1]
@@ -66,6 +71,7 @@ with open(template_file, "r") as f:
 
                     data["prefix"] = line_data[0]
                     data["group"] = line_data[len(line_data)-5]
+                    data["artifact"] = line_data[len(line_data)-3]
                     data["artifact_suffix"] = line_data[len(line_data)-3]
                     data["version"] = line_data[len(line_data)-1]
                     data["version_sum"] = sum(ver_list)
@@ -76,6 +82,7 @@ with open(template_file, "r") as f:
                 if len(line_data) > 1:
                     data["prefix"] = line_data[0]
                     data["group"] = line_data[len(line_data)-2]
+                    data["artifact"] = line_data[len(line_data)-1]
                     sufix = line_data[len(line_data)-1].split('-')
                     data["artifact_suffix"] = sufix[len(sufix)-1]
                     data["version"] = None
@@ -94,12 +101,30 @@ with open(source_file, "r") as f:
     for index_out, line_out in enumerate(f):
         if index_out > source_line_start and index_out < source_line_end:
 #             print("Line {}: {}".format(index_out, line_out.strip()))
-            for l in template_dict_list:
-                if l['group'] in line_out and l['artifact_suffix'] in line_out:
-                    template_set.add(l['template_line'])
-                    change_set.add(line_out)
+            template_split_line = line_out.strip().replace("'", "").replace("ion ", "ion:").replace("pile ", "pile:").replace(" ", "")
+#             print("Line {}: {}".format(index_out, template_split_line))
+            line_data = template_split_line.replace(",", ":").split(":")
+#             print("Line {}: {}".format(index_out, line_data))
+            for template in template_dict_list:
+                template_set.add(template['template_line'])
+                if len(line_data) > 2:
+                    if template['group'] == line_data[1]:
+                        if template['artifact'] == line_data[len(line_data)-2]:
+                            change_set.add(line_out)
+                        elif template['artifact'] == line_data[len(line_data)-1]:
+                            change_set.add(line_out)
+                    elif template['group'] == line_data[2]:
+                        if template['artifact'] == line_data[len(line_data)-3] and template['version'] == line_data[len(line_data)-1]:
+                            change_set.add(line_out)
+                    else:
+                        unchange_set.add(line_out)
                 else:
                     unchange_set.add(line_out)
+
+# pprint.pprint(unchange_set)
+# pprint.pprint(change_set)
+# diff = (unchange_set - change_set)
+# pprint.pprint(diff)
 
 d = {}
 for t in template_dict_list:
