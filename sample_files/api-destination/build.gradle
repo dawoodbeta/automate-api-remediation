@@ -75,8 +75,8 @@ buildscript {
 		}
 	}
 	dependencies {
-		classclasspath 'io.spring.gradle:dependency-management-plugin'
-		classclasspath 'org.springframework.boot:spring-boot-gradle-plugin:2.6.4'
-		classclasspath 'com.github.sherter.googlejavaformatgradleplugin:google-java-format-gradle-plugin:0.9-SNAPSHOT'
+		classpath 'io.spring.gradle:dependency-management-plugin'
+		classpath 'org.springframework.boot:spring-boot-gradle-plugin:2.6.4'
+		classpath 'com.github.sherter.googlejavaformatgradleplugin:google-java-format-gradle-plugin:0.9-SNAPSHOT'
 	}
 }
