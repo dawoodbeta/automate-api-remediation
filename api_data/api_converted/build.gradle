@@ -7,27 +7,6 @@ apply plugin: 'io.spring.dependency-management'
 apply from: "${rootDir}/gradle/common/jacoco.gradle"
 apply from: "${rootDir}/gradle/common/repositories.gradle"
 
-buildscript {
-	repositories {
-		mavenCentral()
-		maven {
-			url 'https://repo.spring.io/milestone'
-		}
-		maven {
-			url 'https://oss.sonatype.org/content/repositories/snapshots/'
-		}
-		maven {
-			url "https://plugins.gradle.org/m2/"
-		}
-	}
-	dependencies {
-//		id 'org.springframework.boot' version '2.6.9'
-//		id 'io.spring.dependency-management' version '1.0.11.RELEASE'
-		classpath 'io.spring.gradle:dependency-management-plugin:1.0.11.RELEASE'
-		classpath 'org.springframework.boot:spring-boot-gradle-plugin:2.6.9'
-		classpath 'gradle.plugin.com.github.sherter.google-java-format:google-java-format-gradle-plugin:0.4.1'
-	}
-}
 
 group = 'com.capgemini'
 version = '0.0.1-SNAPSHOT'
@@ -91,4 +70,26 @@ dependencies {
 //    <version>2.21.0</version>
 //			<scope>test</scope>
 //</dependency>
+}
+buildscript {
+	repositories {
+		mavenCentral()
+		maven {
+			url 'https://repo.spring.io/milestone'
+		}
+		maven {
+			url 'https://oss.sonatype.org/content/repositories/snapshots/'
+		}
+		maven {
+			url "https://plugins.gradle.org/m2/"
+		}
+	}
+	dependencies {
+		classpath 'io.spring.gradle:dependency-management-plugin'
+		classpath 'com.github.sherter.googlejavaformatgradleplugin:google-java-format-gradle-plugin:0.9-SNAPSHOT'
+		classpath 'org.springframework.boot:spring-boot-gradle-plugin:2.6.9'
+//		id 'org.springframework.boot' version '2.6.9'
+//		id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+		classpath 'gradle.plugin.com.github.sherter.google-java-format:google-java-format-gradle-plugin:0.4.1'
+	}
 }

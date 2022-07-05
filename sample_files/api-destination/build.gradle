@@ -11,18 +11,6 @@ group = 'com.capgemini.api'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
 
-buildscript {
-	repositories {
-		maven {
-			url 'https://repo.spring.io/milestone'
-		}
-	}
-	dependencies {
-		classpath 'io.spring.gradle:dependency-management-plugin:1.0.2.RELEASW'
-		classpath 'org.springframework.boot:spring-boot-gradle-plugin:1.0.10.RELEASE'
-		classpath 'com.github.sherter.googlejavaformatgradleplugin:google-java-format-gradle-plugin:0.9-SNAPSHOT'
-	}
-}
 
 
 ext {
@@ -55,6 +43,7 @@ sourceSets{
 	}
 }
 
+
 dependencies {
 	implementation 'com.barclays.api:api-core-boot:2.0.21'
 	implementation 'org.springframework.cloud:spring-cloud-config-server'
@@ -78,4 +67,16 @@ dependencies {
 	// https://mvnrepository.com/artifact/io.fabric8/openshift-client
 	implementation group: 'io.fabric8', name: 'openshift-client', version: '5.12.2'
 	testImplementation 'org.raml.raml-parser-2:1.0.13'
+}
+buildscript {
+	repositories {
+		maven {
+			url 'https://repo.spring.io/milestone'
+		}
+	}
+	dependencies {
+		classclasspath 'io.spring.gradle:dependency-management-plugin'
+		classclasspath 'org.springframework.boot:spring-boot-gradle-plugin:2.6.4'
+		classclasspath 'com.github.sherter.googlejavaformatgradleplugin:google-java-format-gradle-plugin:0.9-SNAPSHOT'
+	}
 }
