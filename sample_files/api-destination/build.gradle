@@ -43,7 +43,6 @@ sourceSets{
 	}
 }
 
-
 dependencies {
 	implementation 'com.barclays.api:api-core-boot:2.0.21'
 	implementation 'org.springframework.cloud:spring-cloud-config-server'
@@ -57,7 +56,6 @@ dependencies {
 	testImplementation group: 'com.github.tomakehurst', name: 'wiremock', version: '2.26.3'
 	testImplementation 'junit:junit'
 	testImplementation 'org.mockito:mockito-core'
-	testImplementation 'org.raml.raml-parser-2:1.0.13'
 	testImplementation 'com.intuit.karate:karate-junit5:0.9.6'
 	testImplementation 'com.intuit.karate:karate-apache:0.9.6'
 
@@ -68,6 +66,7 @@ dependencies {
 	implementation group: 'io.fabric8', name: 'openshift-client', version: '5.12.2'
 	testImplementation 'org.raml.raml-parser-2:1.0.13'
 }
+
 buildscript {
 	repositories {
 		maven {

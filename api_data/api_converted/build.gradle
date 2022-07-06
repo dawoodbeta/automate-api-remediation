@@ -36,23 +36,10 @@ tasks.named('test') {
 	useJUnitPlatform()
 }
 
-
 dependencies {
-	implementation 'com.barclays.api:api-core-boot:2.0.21'
-	implementation 'org.springframework.cloud:spring-cloud-config-server'
-	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-	implementation 'org.springframework.cloud:spring-cloud-starter-vault-config'
-	implementation 'org.springframework.cloud:spring-cloud-starter-bus-amqp'
-	implementation 'org.springframework.cloud:spring-cloud-config-monitor'
 	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
-	implementation 'org.bitbucket.b_c:jose4j:0.7.3'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testImplementation group: 'com.github.tomakehurst', name: 'wiremock', version: '2.26.3'
-	testImplementation 'junit:junit'
 	testImplementation 'org.mockito:mockito-core'
-	testImplementation 'org.raml.raml-parser-2:1.0.13'
-	testImplementation 'com.intuit.karate:karate-junit5:0.8.0.1'
-	testImplementation 'com.intuit.karate:karate-apache:0.8.0.1'
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
@@ -71,6 +58,7 @@ dependencies {
 //			<scope>test</scope>
 //</dependency>
 }
+
 buildscript {
 	repositories {
 		mavenCentral()
@@ -86,7 +74,6 @@ buildscript {
 	}
 	dependencies {
 		classpath 'io.spring.gradle:dependency-management-plugin'
-		classpath 'com.github.sherter.googlejavaformatgradleplugin:google-java-format-gradle-plugin:0.9-SNAPSHOT'
 		classpath 'org.springframework.boot:spring-boot-gradle-plugin:2.6.9'
 //		id 'org.springframework.boot' version '2.6.9'
 //		id 'io.spring.dependency-management' version '1.0.11.RELEASE'
