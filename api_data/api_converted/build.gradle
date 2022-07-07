@@ -1,23 +1,20 @@
 apply plugin: 'java'
+apply plugin: 'maven'
 apply plugin: 'eclipse'
-apply plugin: 'jacoco'
 apply plugin: 'com.github.sherter.google-java-format'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 apply from: "${rootDir}/gradle/common/jacoco.gradle"
 apply from: "${rootDir}/gradle/common/repositories.gradle"
 
-
-group = 'com.capgemini'
+group = 'com.capgemini.api'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
 
-repositories {
-	mavenCentral()
-}
+
 
 ext {
-	set('springCloudVersion', "2021.0.3")
+	set('springCloudVersion', "Hoxton.SR9")
 }
 
 build{
@@ -26,57 +23,59 @@ build{
 
 test.dependsOn verifyGoogleJavaFormat
 
+
 dependencyManagement {
 	imports {
 		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
 	}
 }
 
-tasks.named('test') {
+test {
 	useJUnitPlatform()
 }
 
-dependencies {
-	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testImplementation 'org.mockito:mockito-core'
-	implementation 'org.springframework.boot:spring-boot-starter-actuator'
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.springframework.cloud:spring-cloud-starter-config'
-	implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'
-	implementation 'com.h2database:h2'
+sourceSets{
+	main{
+		output.resourcesDir = "build/classes/main"
+	}
+	test{
+		output.resourcesDir = "build/classes/test"
+	}
+}
 
-	// https://mvnrepository.com/artifact/org.mockito/mockito-junit-jupiter
-//	testImplementation group: 'org.mockito', name: 'mockito-junit-jupiter', version: '4.6.1'
-	testImplementation 'org.junit.jupiter:junit-jupiter-engine'
-//	<version>5.8.1</version>
-//    <scope>test</scope>
-//			</dependency>
-//<dependency>
-//    <version>2.21.0</version>
-//			<scope>test</scope>
-//</dependency>
+dependencies {
+	implementation 'com.barclays.api:api-core-boot:2.0.21'
+	implementation 'org.springframework.cloud:spring-cloud-config-server'
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	implementation 'org.springframework.cloud:spring-cloud-starter-vault-config'
+	implementation 'org.springframework.cloud:spring-cloud-starter-bus-amqp'
+	implementation 'org.springframework.cloud:spring-cloud-config-monitor'
+	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+	implementation 'org.bitbucket.b_c:jose4j:0.7.3'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation group: 'com.github.tomakehurst', name: 'wiremock', version: '2.26.3'
+	testImplementation 'junit:junit'
+	testImplementation 'org.mockito:mockito-core'
+	testImplementation 'com.intuit.karate:karate-junit5:0.9.6'
+	testImplementation 'com.intuit.karate:karate-apache:0.9.6'
+
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	// https://mvnrepository.com/artifact/com.oracle.database.jdbc/ojdbc8
+	implementation 'com.oracle.database.jdbc:ojdbc8'
+	// https://mvnrepository.com/artifact/io.fabric8/openshift-client
+	implementation group: 'io.fabric8', name: 'openshift-client', version: '5.12.2'
+	testImplementation 'org.raml.raml-parser-2:1.0.13'
 }
 
 buildscript {
 	repositories {
-		mavenCentral()
 		maven {
 			url 'https://repo.spring.io/milestone'
-		}
-		maven {
-			url 'https://oss.sonatype.org/content/repositories/snapshots/'
-		}
-		maven {
-			url "https://plugins.gradle.org/m2/"
 		}
 	}
 	dependencies {
 		classpath 'io.spring.gradle:dependency-management-plugin'
-		classpath 'org.springframework.boot:spring-boot-gradle-plugin:2.6.9'
-//		id 'org.springframework.boot' version '2.6.9'
-//		id 'io.spring.dependency-management' version '1.0.11.RELEASE'
-		classpath 'gradle.plugin.com.github.sherter.google-java-format:google-java-format-gradle-plugin:0.4.1'
+		classpath 'org.springframework.boot:spring-boot-gradle-plugin:2.6.4'
+		classpath 'com.github.sherter.googlejavaformatgradleplugin:google-java-format-gradle-plugin:0.9-SNAPSHOT'
 	}
 }
